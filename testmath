@@ -1,275 +1,97 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "..\四则运算生成\Four_operations.h"
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace UnitTest3
+namespace UnitTest1
 {
-	TEST_CLASS(UnitTest3)
+	TEST_CLASS(UnitTest1)
 	{
 	public:
 		
-		TEST_METHOD(TestMethod1)//简单整数运算
+		TEST_METHOD(TestMethod1)
 		{
-			char ysf = 1;//用1，2，3,4分别表示 '+','-','*','/'
-			int a = 4, b = 8;//因子数
-			int zhengshu = 1;//1为整数，2为小数
-			int result, r1 = 12, r2 = -4, r3 = 32,r4=4;
-			float r5 = 0.5;
-			if (ysf == 1)
-			{
-				result = a + b;
-				Assert::AreEqual(r1, result);
-			}
-			else if(ysf==2)
-			{
-				result = a - b;
-				Assert::AreEqual(r2, result);
-			}
-			else if (ysf == 3)
-			{
-				result = a * b;
-				Assert::AreEqual(r3, result);
-			}
-			else if (ysf == 4)
-			{
-				if (b == 0)
-				{
-					 result = a / 1;
-					Assert::AreEqual(r4, result);//防止分母为零程序崩溃
-				}
-				else
+			Four_operations fo;
+			int kuohao = 1;//括号(1表示需要，0表示不需要)
+			int add = 1;//加法
+			int sub = 1;//减法
+			int mul = 1;//乘法
+			int div = 1;//除法
+			int fl = 1;//小数
+			int max = 100;//最大值
+			fo.putall(100, 1, 1, 1, 1, 1, 1, 1, 1, 0);//Max, needkuohao, needadd, needsub, needmul, needdiv, needprint, needwritetofile, needfloat, needansw;
+			fo.putnum(20);//num
+			fo.cal(12.56, 2.36, 8.35, '/', '*', 1);//a，b，c，d，e,，kuohao
+			Assert::AreEqual(20, fo.num);
 
-				{
-					float result = a / b;
-					Assert::AreEqual(r5, result);
-				}
-			}
 		}
-		TEST_METHOD(TestMethod2)//简单小数运算
+		TEST_METHOD(TestMethod2)
 		{
-			char ysf = 1;//用1，2，3,4分别表示 '+','-','*','/'
-			float a = 2.5, b = 0.2;//因子数
-			int zhengshu = 2;//1为整数，2为小数
-			float result, r1 = 2.7, r2 = 2.3, r3 = 5.0,r4=2.5, r5 = 12.5;
-			if (ysf == 1)
-			{
-				result = a + b;
-				Assert::AreEqual(r1, result);
-			}
-			else if (ysf == 2)
-			{
-				result = a - b;
-				Assert::AreEqual(r2, result);
-			}
-			else if (ysf == 3)
-			{
-				result = a * b;
-				Assert::AreEqual(r3, result);
-			}
-			else if (ysf == 4)
-			{
-				if (b == 0)
-				{
-					result = a / 1;
-					Assert::AreEqual(r4, result);//防止分母为零死机
-				}
-				else
+			Four_operations fo;
+			int kuohao = 1;//要括号
+			int add = 1;
+			int sub = 0;//不要减法
+			int mul = 1;
+			int div = 1;
+			int fl = 1;//要小数
+			int max = 100;//100以内
+			fo.putall(100, 1, 1, 0, 1, 1, 1, 1, 1, 0);//Max, needkuohao, needadd, needsub, needmul, needdiv, needprint, needwritetofile, needfloat, needansw;
+			fo.putnum(30);//num
+			fo.cal(82.56, 25.36, 2.35, '+', '*', 1);//
+			Assert::AreEqual(30, fo.num);
 
-				{
-					result = a / b;
-					Assert::AreEqual(r5, result);
-				}
-			}
 		}
-		TEST_METHOD(TestMethod3)//整数混合运算
+		TEST_METHOD(TestMethod3)
 		{
-			char ysf = 1;
-			//表示混合运算,其中1表示'+','*'混合，其中2表示'-','*'混合，其中3表示'+','/'混合，其中4表示'-','/'混合
-			int a = 4, b = 8, c = 5;//因子数
-			char kuohao = 1;//1为无括号，2为有括号
-			int zhengshu = 1;//1为整数，2为小数
-			int result, r1 = 44, r2 = -36;
-			float r3 = 12, r4 = 5.6;
-			float r5 = -4, r6= 2.4;
-			if (ysf == 1)
-			
-			{
-				result = a + b*c;
-				Assert::AreEqual(r1, result);
-			}
-			else if (ysf == 2)
-			{
-				result = a - b*c;
-				Assert::AreEqual(r2, result);
-			}
-			else if (ysf == 3)
-			{
-				if (c == 0)
-				{
-					float result = a + b / 1;
-					Assert::AreEqual(r3, result);
-				}
-				else
-				{
-					float result = a + b/c;
-					Assert::AreEqual(r5, result);
-				}
-			}
-			else if (ysf == 4)
-			{
-				if (c== 0)
-				{
-					float result = a -b/1;
-					Assert::AreEqual(r5, result);
-				}
-				else
+			Four_operations fo;
+			int kuohao = 0;//不要括号
+			int add = 1;
+			int sub = 0;//不要减法
+			int mul = 0;//不要乘法
+			int div = 1;
+			int fl = 1;
+			int max = 10;//10以内
+			fo.putall(10, 0, 1, 0, 0, 1, 1, 1, 1, 0);//Max, needkuohao, needadd, needsub, needmul, needdiv, needprint, needwritetofile, needfloat, needansw;
+			fo.putnum(30);//num
+			fo.cal(5.36, 2.58, 0.25, '/', '/', 0);
+			Assert::AreEqual(30, fo.num);
 
-				{
-					float result = a -b/c;
-					Assert::AreEqual(r5, result);
-				}
-			}
 		}
-		TEST_METHOD(TestMethod4)//小数混合运算
+
+		TEST_METHOD(TestMethod4)
 		{
-			char ysf = 1;//表示混合运算,其中1表示'+','*'混合，其中2表示'-','*'混合，其中3表示'+','/'混合，其中4表示'-','/'混合
-			float  a = 2.5, b = 1.2,c=0.6;//因子数
-			char kuohao = 1;//1为无括号，2为有括号
-			int zhengshu = 2;//1为整数，2为小数
-			float result, r1 = 3.22, r2 = 1.78, r3 = 3.7, r4 = 3.0, r5 = 1.3,r6=0.5;
-			if (ysf == 1)
+			Four_operations fo;
+			int kuohao = 1;//要括号
+			int add = 1;
+			int sub = 0;
+			int mul = 0;
+			int div = 1;
+			int fl = 0;//不要小数
+			int max = 10;//10以内
+			fo.putall(10, 1, 1, 0, 0, 1, 1, 1, 0, 0);//Max, needkuohao, needadd, needsub, needmul, needdiv, needprint, needwritetofile, needfloat, needansw;
+			fo.putnum(30);//num
+			fo.cal(6, 2, 3, '+', '/', 0);
+			Assert::AreEqual(30, fo.num);
 
-			{
-				result = a + b * c;
-				Assert::AreEqual(r1, result);
-			}
-			else if (ysf == 2)
-			{
-				result = a - b * c;
-				Assert::AreEqual(r2, result);
-			}
-			else if (ysf == 3)
-			{
-				if (c == 0)
-				{
-					float result = a + b / 1;
-					Assert::AreEqual(r3, result);
-				}
-				else
-				{
-					float result = a + b / c;
-					Assert::AreEqual(r5, result);
-				}
-			}
-			else if (ysf == 4)
-			{
-				if (c == 0)
-				{
-					 result = a - b / 1;
-					Assert::AreEqual(r5, result);
-				}
-				else
-
-				{
-					 result = a - b / c;
-					Assert::AreEqual(r5, result);
-				}
-			}
 		}
-		TEST_METHOD(TestMethod5)//有括号整数混合运算
+
+		TEST_METHOD(TestMethod5)
 		{
-			char ysf = 1;
-			//表示混合运算,其中1表示'+','*'混合，其中2表示'-','*'混合，其中3表示'+','/'混合，其中4表示'-','/'混合
-			int a = 4, b = 8, c = 5;//因子数
-			char kuohao = 2;//1为无括号，2为有括号
-			int zhengshu = 1;//1为整数，2为小数
-			int result, r1 = 60, r2 = -20, r3 = 12, r5 = -4;
-			float r4 = 2.4;
-			float r6 = -0.8;
-			if (ysf == 1)
+			Four_operations fo;
+			int kuohao = 1;//要括号
+			int add = 1;
+			int sub = 1;
+			int mul = 0;//不要乘法
+			int div = 0;//不要除法
+			int fl = 0;//不要小数
+			int max = 100;//100以内
+			int answ = 1;//现场答题
+			fo.putall(100, 1, 1, 1, 0, 0, 1, 1, 0, 1);//Max, needkuohao, needadd, needsub, needmul, needdiv, needprint, needwritetofile, needfloat, needansw;
+			fo.putnum(20);//num
+			fo.cal(45, 3, 5, '+', '-', 0);
+			Assert::AreEqual(20, fo.num);
 
-			{
-				result = (a + b)* c;
-				Assert::AreEqual(r1, result);
-			}
-			else if (ysf == 2)
-			{
-				result = (a - b) * c;
-				Assert::AreEqual(r2, result);
-			}
-			else if (ysf == 3)
-			{
-				if (c == 0)
-				{
-				    result = (a + b) / 1;
-					Assert::AreEqual(r3, result);
-				}
-				else
-				{
-				     float result = (a + b) / c;
-					Assert::AreEqual(r4, result);
-				}
-			}
-			else if (ysf == 4)
-			{
-				if (c == 0)
-				{
-				    result = (a - b) / 1;
-					Assert::AreEqual(r5, result);
-				}
-				else
-
-				{
-					float result = (a - b) / c;
-					Assert::AreEqual(r6, result);
-				}
-			}
-		}
-		TEST_METHOD(TestMethod6)//小数混合运算
-		{
-			char ysf = 1;//表示混合运算,其中1表示'+','*'混合，其中2表示'-','*'混合，其中3表示'+','/'混合，其中4表示'-','/'混合
-			float  a = 2.5, b = 1.2, c = 0.6;//因子数
-			char kuohao = 2;//1为无括号，2为有括号
-			int zhengshu = 2;//1为整数，2为小数
-			float result, r1 = 2.22, r2 = 0.78, r3 = 3.7, r4 = 6.17, r5 = 1.3, r6 = 2.16;
-			if (ysf == 1)
-
-			{
-				result = (a + b) * c;
-				Assert::AreEqual(r1, result);
-			}
-			else if (ysf == 2)
-			{
-				result = (a - b) * c;
-				Assert::AreEqual(r2, result);
-			}
-			else if (ysf == 3)
-			{
-				if (c == 0)
-				{
-					result = (a + b) / 1;
-					Assert::AreEqual(r3, result);
-				}
-				else
-				{
-					 result = (a + b) / c;
-					Assert::AreEqual(r4, result);
-				}
-			}
-			else if (ysf == 4)
-			{
-				if (c == 0)
-				{
-					 result = (a - b) / 1;
-					Assert::AreEqual(r5, result);
-				}
-				else
-
-				{
-					result = (a - b) / c;
-					Assert::AreEqual(r5, result);
-				}
-			}
 		}
 	};
 }
